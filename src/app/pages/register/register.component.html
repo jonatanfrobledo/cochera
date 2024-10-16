@@ -1,0 +1,18 @@
+<main>
+    <div id="izquierda">
+        <h1>PARKING APP</h1>
+    </div>
+    <div id="derecha">
+        <form #loginForm = "ngForm" (ngSubmit)="register(loginForm)">
+            <input type="text" id="username" placeholder="Usuario" name="username" ngModel required>
+            <input type="text" id="nombre" placeholder="Nombre" name="nombre" ngModel required>
+            <input type="text" id="apellido" placeholder="Apellido" name="apellido" ngModel required>
+            <input type="text" id="password" placeholder="Contraseña" name="password" ngModel required>
+            <button [disabled]="loginForm.invalid" type="submit">Registrarse</button>
+            @if(errorRegister) {
+                <p>Error en registro</p>
+            }
+        </form>
+        <a [routerLink]="['/login']">VOLVER</a>
+    </div>
+  </main>

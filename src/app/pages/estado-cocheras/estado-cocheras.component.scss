@@ -1,0 +1,162 @@
+main{
+    overflow: hidden; /* Asegúrate de que no haya scroll */
+}
+/* Estructura principal */
+main.flex-column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem;
+    background-image: url('./../../../../public/car-car-park.jpg'); /* Ruta de la imagen de fondo */
+    background-size: cover; /* Asegura que la imagen cubra todo el contenedor */
+    background-position: center; /* Centra la imagen en el contenedor */
+    background-repeat: no-repeat; /* No repetir la imagen */
+    min-height: 100vh; /* Altura mínima del contenedor */
+    overflow: hidden; /* Asegúrate de que no haya scroll */
+}
+
+/* Contenedor para input y botón */
+.input-button-container {
+    display: flex; /* Alinea los elementos en fila */
+    align-items: center; /* Centra verticalmente */
+    gap: 10px; /* Espacio entre el input y el botón */
+}
+
+/* Formulario para agregar cochera */
+.form-container {
+    display: flex;
+    flex-direction: column; /* Coloca los elementos en columna */
+    align-items: center; /* Centra los elementos */
+    margin-bottom: 2rem; /* Espacio entre el formulario y la tabla */
+}
+
+/* Estilo del input */
+input {
+    padding: 10px; /* Espaciado interno del input */
+    border-radius: 5px; /* Bordes redondeados */
+    border: 1px solid #ccc; /* Color de borde */
+    width: 200px; /* Ancho del input */
+    font-size: 1rem; /* Tamaño de fuente */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Botón de agregar cochera */
+#agregar-cochera {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-size: 1.5rem; /* Ajustar tamaño de fuente */
+    padding: 10px 20px; /* Ajustar espaciado interno */
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#agregar-cochera:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Cambiar color en hover */
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: collapse; /* Elimina el espacio entre bordes */
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+thead {
+    background-color: white; /* Color de encabezado */
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Color diferente para filas pares */
+}
+
+tbody tr:hover {
+    background-color: rgb   a(0, 0, 0, 0.05); /* Efecto hover para filas */
+}
+
+/* Estilos para los estados de disponibilidad */
+span.disponible {
+    background-color: #28a745; /* Verde para disponible */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+span.ocupado {
+    background-color: #dc3545; /* Rojo para ocupado */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+/* Acciones */
+.acciones-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem; /* Espacio entre botones */
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+button:hover {
+    transform: scale(1.1); /* Efecto hover */
+}
+
+button img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Estilo responsivo para pantallas pequeñas */
+@media (max-width: 820px) {
+    table {
+        font-size: 0.875rem; /* Tamaño de texto más pequeño en móviles */
+    }
+
+    td {
+        padding: 0.5rem;
+    }
+
+    .acciones-container {
+        gap: 0.25rem;
+    }
+
+    button img {
+        width: 20px;
+        height: 20px;
+    }
+
+    #agregar-cochera {
+        font-size: 1.5rem;
+    }
+
+    input {
+        width: 150px; /* Ancho más pequeño en móviles */
+    }
+}
+/* Estilo para la columna de tiempo transcurrido */
+td:nth-child(5) { /* Aplica estilos a la quinta columna */
+    font-weight: bold; /* Negrita para resaltar el tiempo */
+    color: #333; /* Color del texto */
+}
