@@ -1,117 +1,155 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { iCochera } from '../../interfaces/cochera';
+import { Cochera } from '../../interfaces/cochera';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { DataCocherasService } from '../../services/data-cocheras.service';
 import { DataAuthService } from '../../services/data-auth.service';
-import { FormsModule } from '@angular/forms';
+import { DataTarifasService } from '../../services/data-tarifas.service';
 
 @Component({
   selector: 'app-estado-cocheras',
   standalone: true,
-  imports: [RouterModule, FormsModule, CommonModule],
+  imports: [RouterModule,CommonModule],
   templateUrl: './estado-cocheras.component.html',
-  styleUrls: ['./estado-cocheras.component.scss']
+  styleUrl: './estado-cocheras.component.scss'
 })
-export class EstadoCocherasComponent implements OnInit {
+export class EstadoCocherasComponent {
   authService = inject(DataAuthService);
+  dataTarifasService = inject(DataTarifasService);
+
   esAdmin = true;
-  dataCocherasService = inject(DataCocherasService);
 
-  nuevaCochera: iCochera = {
-    id: 0,
-    descripcion: '-',
-    deshabilitada: 0,
-    eliminada: 0,
-    fechaIngreso: new Date(),
-    horaIngreso: new Date(),
-    minutosOcupados: 0,
-    segundosOcupados: 0, // Inicializa los segundos ocupados
-    horasOcupadas: 0, // Inicializa las horas ocupadas
-    costo: 0,
-    patente: '' // Campo para la patente
-  };
+  dataCocherasService = inject(DataCocherasService)
 
-  costoPorMinuto: number = 10; // Define el costo por minuto
 
-  ngOnInit() {
-    this.contarTiempo(); // Iniciar el contador al cargar el componente
+  async agregarCochera(){
+    await this.dataCocherasService.agregarCochera()
   }
 
-  agregarCochera() {
-    // Verificar que la patente esté ingresada
-    if (!this.nuevaCochera.patente) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'La patente es requerida'
-      });
-      return;
-    }
-
-    // Crear una nueva cochera con la fecha y hora actuales
-    const cocheraAgregada: iCochera = {
-      id: this.dataCocherasService.cocheras.length + 1, // O como prefieras generar IDs
-      descripcion: '-',
-      deshabilitada: 1, // Marcar como ocupada al agregar
-      eliminada: 0,
-      fechaIngreso: new Date(), // Fecha de ingreso actual
-      horaIngreso: new Date(),  // Hora de ingreso actual
-      minutosOcupados: 0, // Inicialmente 0 minutos ocupados
-      segundosOcupados: 0, // Inicialmente 0 segundos ocupados
-      horasOcupadas: 0, // Inicialmente 0 horas ocupadas
-      costo: 0, // Inicialmente 0 costo
-      patente: this.nuevaCochera.patente
-    };
-
-    // Agregar cochera al servicio
-    this.dataCocherasService.agregarCochera(cocheraAgregada); // Llama al método sin promesas
-
-    // Reiniciar el campo de entrada
-    this.nuevaCochera.patente = ''; // Reiniciar patente
+  async borrarFila(index:number){
+    await this.dataCocherasService.borrarFila(index)
   }
 
-  contarTiempo() {
-    setInterval(() => {
-        this.dataCocherasService.cocheras.forEach(cochera => {
-            if (cochera.deshabilitada === 1) { // Solo para ocupadas
-                const tiempoTranscurrido = new Date().getTime() - cochera.horaIngreso.getTime();
-                cochera.minutosOcupados = Math.floor(tiempoTranscurrido / 60000);
-                cochera.segundosOcupados = Math.floor((tiempoTranscurrido % 60000) / 1000);
-                cochera.horasOcupadas = Math.floor(tiempoTranscurrido / 3600000);
-                cochera.costo = cochera.minutosOcupados * this.costoPorMinuto; // Calcula el costo basado en minutos ocupados
-            }
-        });
-    }, 1000); // Actualiza cada segundo para reflejar el tiempo exacto
-}
-
-  borrarFila(index: number) {
-    this.dataCocherasService.borrarFila(index);
+  deshabilitarCochera(index:number){
+    this.dataCocherasService.deshabilitarCochera(index)
   }
 
-  deshabilitarCochera(index: number) {
-    this.dataCocherasService.deshabilitarCochera(index);
+  habilitarCochera(index:number){
+    this.dataCocherasService.habilitarCochera(index)
   }
 
-  habilitarCochera(index: number) {
-    this.dataCocherasService.habilitarCochera(index);
-  }
-
-  preguntarBorrarCochera(cocheraId: number) {
+  preguntarBorrarCochera(cocheraId: number){
     Swal.fire({
-      title: "¿Quieres eliminar esta cochera?",
+      title: "Do you want to save the changes?",
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: "Eliminar",
-      denyButtonText: `No eliminar`
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then(async (result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        await this.borrarFila(cocheraId)
+        Swal.fire("Saved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  }
+
+  abrirEstacionamiento(idCochera: number) {
+    const idUsuarioIngreso = "ADMIN"
+    Swal.fire({
+      title: "Abrir Cochera",
+      html: `<input type="text" id="patente" class="swal2-input" placeholder="Ingrese patente">`,
+      showCancelButton: true,
+      confirmButtonText: "Abrir",
+      cancelButtonText: "Cancelar",
+      preConfirm: () => {
+        const patenteInput = document.getElementById("patente") as HTMLInputElement
+        if (!patenteInput || !patenteInput.value) {
+          Swal.showValidationMessage("Por favor, ingrese una patente")
+          return false;
+        }
+        return { patente: patenteInput.value };
+      }
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await this.borrarFila(cocheraId);
-        Swal.fire("¡Eliminado!", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("No se eliminó la cochera", "", "info");
+        const { patente } = result.value;
+        await this.dataCocherasService.abrirEstacionamiento(patente, idUsuarioIngreso, idCochera);
       }
+    })
+  }
+
+  cerrarEstacionamiento(cochera: Cochera) {
+    const horario = cochera.estacionamiento?.horaIngreso;
+    let fechaIngreso;
+    let horasPasadas = 0; 
+    let minutosPasados = 0; 
+    let patente: string;
+    let tarifaABuscar: string;
+    let total;
+
+    if (horario) {
+        fechaIngreso = new Date(horario);
+
+        if (fechaIngreso) {
+            const fechaActual = new Date();
+            const diferenciaEnMilisegundos = fechaActual.getTime() - fechaIngreso.getTime();
+            horasPasadas = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60));
+            minutosPasados = Math.floor((diferenciaEnMilisegundos % (1000 * 60 * 60)) / (1000 * 60));
+        }
+
+        patente = cochera.estacionamiento?.patente!;
+
+        const totalMinutos = horasPasadas * 60 + minutosPasados;
+        if (totalMinutos <= 30) {
+            tarifaABuscar = "MEDIAHORA";
+        } else if (totalMinutos <= 60) {
+            tarifaABuscar = "PRIMERAHORA";
+        } else {
+            tarifaABuscar = "VALORHORA";
+        }
+
+        total = this.dataTarifasService.tarifas.find(t => t.id === tarifaABuscar)?.valor;
+    }
+
+    const horaFormateada = fechaIngreso ? fechaIngreso.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+
+    Swal.fire({
+        html: `
+            <div style="text-align: left;">
+                <h4>Horario de inicio: ${horaFormateada}</h4>
+                <h4>Tiempo transcurrido: ${horasPasadas} horas y ${minutosPasados} minutos</h4>
+                <hr style="border: 1px solid #ccc;">
+                <h2 style="margin: 20px 0 10px; text-align: center;">Total a cobrar</h2>
+                <div style="background-color: #28a745; color: white; font-size: 24px; padding: 10px; border-radius: 5px; text-align: center; margin: 0 auto; display: block; width: fit-content;">
+                    $${total}
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button id="cobrar" class="swal2-confirm swal2-styled" style="background-color: #007bff; padding: 10px 24px;">Cobrar</button>
+                    <button id="volver" class="swal2-cancel swal2-styled" style="background-color: #aaa; padding: 10px 24px;">Volver</button>
+                </div>
+            </div>`,
+        showConfirmButton: false,
+        didOpen: () => {
+            const cobrarButton = document.getElementById('cobrar');
+            const volverButton = document.getElementById('volver');
+            
+            if (cobrarButton) {
+                cobrarButton.addEventListener('click', async () => {
+                    const idUsuarioEgreso = "ADMIN";
+                    await this.dataCocherasService.cerrarEstacionamiento(patente, idUsuarioEgreso);
+                    Swal.close();
+                });
+            }
+            
+            if (volverButton) {
+                volverButton.addEventListener('click', () => {
+                    Swal.close();
+                });
+            }
+        }
     });
   }
 }

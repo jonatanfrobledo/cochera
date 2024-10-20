@@ -1,4 +1,6 @@
-export interface iCochera {
+import { Estacionamiento } from "./estacionamiento";
+
+export interface Cochera {
     id: number;
     descripcion: string;
     deshabilitada: number; // 0 para libre, 1 para ocupada
@@ -10,5 +12,6 @@ export interface iCochera {
     horasOcupadas: number; // Añadir esta línea
     costo: number;
     patente: string; // Campo para la patente
+    estacionamiento: Estacionamiento | undefined;
   }
   

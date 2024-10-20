@@ -1,41 +1,50 @@
+<a [routerLink]="['/login']" >Cerrar sesión</a>
+
 <main class="flex-column-center">
-    <div class="form-container">
-        <label for="patente"></label>
-        <div class="input-button-container">
-            <input type="text" id="patente" [(ngModel)]="nuevaCochera.patente" placeholder="Ingrese patente" />
-            <button id="agregar-cochera" (click)="agregarCochera()">+</button>
-        </div>
-    </div>
     <table>
         <thead>
+        <td>Nº</td>
+        <td>Disponibilidad</td>
+        <td>Ingreso</td>
+        <td>Acciones</td>
+    </thead>
+    <tbody>
+        @for (cochera of dataCocherasService.cocheras; track $index) {
             <tr>
-                <td>Nº</td>
-                <td>Disponibilidad</td>
-                <td>Patente</td>
-                <td>Hora de Ingreso</td>
-                <td>Tiempo Transcurrido</td> <!-- Nueva columna -->
-                <td>Importe a Abonar</td> <!-- Nueva columna -->
-                <td>Acciones</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let cochera of dataCocherasService.cocheras; let i = index">
-                <td>{{ cochera.id }}</td>
+                <td> {{ cochera.id }} </td>
                 <td>
-                    <span [ngClass]="{'disponible': !cochera.deshabilitada, 'ocupado': cochera.deshabilitada}">
-                        {{ !cochera.deshabilitada ? 'Disponible' : 'Ocupado' }}
-                    </span>
+                    @if (!cochera.estacionamiento?.horaEgreso && cochera.estacionamiento?.horaIngreso) {
+                        <button (click)="cerrarEstacionamiento(cochera)">
+                            {{ cochera.estacionamiento?.patente }}
+                        </button>
+                    } @else if (cochera.estacionamiento?.horaEgreso) {
+                        <button (click)="abrirEstacionamiento(cochera.id)">
+                            Desocupado
+                        </button>
+                    } @else {
+                        <button (click)="abrirEstacionamiento(cochera.id)">
+                            Disponible
+                        </button>
+                    }
                 </td>
-                <td>{{ cochera.patente }}</td>
-                <td>{{ cochera.horaIngreso | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-                <td>{{ cochera.horasOcupadas }}h {{ cochera.minutosOcupados }}m {{ cochera.segundosOcupados }}s</td> <!-- Tiempo transcurrido -->
-                <td>${{ cochera.costo.toFixed(2) }}</td> <!-- Importe a abonar -->
-                <td class="acciones-container">
-                    <button (click)="deshabilitarCochera(i)" *ngIf="!cochera.deshabilitada"> DESHABILITAR </button>
-                    <button (click)="habilitarCochera(i)" *ngIf="cochera.deshabilitada"> HABILITAR </button>
-                    <button (click)="preguntarBorrarCochera(i)" *ngIf="esAdmin"> BORRAR </button>
+                <td>{{ cochera.descripcion }}</td>
+                <td class="acciones-container"> 
+                    @if(!cochera.deshabilitada){
+                        <button (click)="deshabilitarCochera($index)"><img src="img/icons/prohibido.png" alt="Deshabilitar cochera"></button>
+                    } @else {
+                        <button (click)="habilitarCochera($index)"><img src="img/icons/ok.png" alt="Habilitar cochera"></button>
+
+                    }
+                    @if(esAdmin){   
+                        <button (click)="preguntarBorrarCochera(cochera.id)"><img src="img/icons/contenedor-de-basura.png" alt="Eliminar cochera"></button>
+                    }
                 </td>
             </tr>
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
+
+@if(esAdmin){
+    <button (click)="agregarCochera()" class="boton-resaltado" id="agregar-cochera">+</button>
+}
 </main>

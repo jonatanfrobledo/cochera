@@ -20,7 +20,7 @@ export class LoginComponent {
     const { usuario, password } = loginForm.value;
     const loginData: Login = { username: usuario, password }
     const res = await this.authService.login(loginData)
-    if (res?.status === "ok") this.router.navigate(['/estado-cocheras']);
+    if (res?.status === 200) this.router.navigate(['/estado-cocheras']);
     else this.errorLogin = true;
   }
 }

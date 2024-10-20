@@ -5,7 +5,7 @@ export interface Login {
 }
 
 export interface ResLogin {
-    status : string, // o lo que devuelva tu backend como respuesta
+    status : number,
     mensaje : number;
     token? : string;
   }
