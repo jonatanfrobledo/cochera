@@ -7,10 +7,19 @@ import { Register } from '../interfaces/register';
   providedIn: 'root'
 })
 export class DataAuthService {
-
-  constructor() { }
-
-  usuario: Usuario | undefined;
+  
+  constructor() { 
+    const token = this.getToken();
+    if(token){
+    if(!this.usuario) this.usuario = {
+      username: '',
+      token: token,
+      esAdmin: false
+    }
+    else this.usuario!.token = token;
+  }
+}
+usuario : Usuario | undefined;
 
   async login(loginData: Login) {
     const res = await fetch('http://localhost:4000/login', {

@@ -1,48 +1,89 @@
 /* Header principal */
 header {
-    background-color: rgb(0, 0, 0);
+    background: linear-gradient(to right, #1a1a1a, #2c2c2c);
     color: white;
-    padding: 1rem 2rem;
+    padding: 1.2rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     position: sticky;
     top: 0;
     z-index: 10;
+}
+
+/* Contenedor del título */
+.header-title {
+    flex: 1;
 }
 
 /* Estilo del título */
 header h1 {
     font-size: 2.5rem;
     margin: 0;
-    font-weight: bold;
-    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    font-family: Arial, sans-serif;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Contenedor de navegación */
+.nav-container {
+    flex: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Navegación */
 nav {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+    flex: 1;
 }
 
 /* Links de navegación */
 nav a {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-    position: relative;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding-bottom: 0.3rem;
 }
 
 /* Efecto hover para los links */
 nav a:hover {
-    color: lighten(lightcyan, 20%);
+    color: #e6e6e6;
+    transform: translateY(-2px);
 }
 
 /* Estilo para el link activo */
 .link-activo {
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid #ffffff;
+}
+
+/* Botón de cerrar sesión */
+.boton-cerrar-sesion {
+    background-color: #dc3545;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    border: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.boton-cerrar-sesion:hover {
+    background-color: #a99494;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Ajustes responsivos */
@@ -50,21 +91,23 @@ nav a:hover {
     header {
         flex-direction: column;
         align-items: flex-start;
+        padding: 1rem 1.5rem;
     }
     
+    .nav-container {
+        width: 100%;
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
     nav {
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 1rem;
+        justify-content: flex-start;
+        margin: 1rem 0;
     }
 
-    header h1 {
-        font-size: 2rem;
-    }
-
-    nav a {
-        font-size: 1rem;
+    .btn-cerrar-sesion {
+        margin-left: 0;
+        align-self: flex-end;
     }
 }

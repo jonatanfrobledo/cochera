@@ -8,6 +8,7 @@ import { soloLogueadoGuard } from './guards/solo-logueado.guard';
 import { soloPublicoGuard } from './guards/solo-publico.guard';
 import { soloAdminGuard } from './guards/solo-admin.guard';
 import { RegisterComponent } from './pages/register/register.component';
+import { PreciosComponent } from './pages/precios/precios.component';
 
 export const routes: Routes = [
     {
@@ -24,6 +25,10 @@ export const routes: Routes = [
                 component: ReportesComponent,
                 canActivate: [soloAdminGuard]
             },
+            {
+                path: "precios",
+                component: PreciosComponent,
+            }
         ]
     },
     {

@@ -1,0 +1,34 @@
+/* Estructura básica */
+main.flex-center {
+    background-image: url("./../../../../public/570564bb065b723134996d033336fca1.jpg");
+    height: 100vh;
+}
+
+/* Contenedor del mensaje */
+.message-container {
+    text-align: center;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.message-container p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+/* Icono animado */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 200px;
+    height: 150px;
+}
+
+

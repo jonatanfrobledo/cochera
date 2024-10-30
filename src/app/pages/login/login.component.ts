@@ -16,11 +16,14 @@ export class LoginComponent {
   authService = inject(DataAuthService);
   router = inject(Router);
   errorLogin = false;
-  async login(loginForm: NgForm) {
-    const { usuario, password } = loginForm.value;
-    const loginData: Login = { username: usuario, password }
+  async login(loginForm: NgForm){
+    const {username, password} = loginForm.value;
+    const loginData = {username, password};
+    
     const res = await this.authService.login(loginData)
-    if (res?.status === 200) this.router.navigate(['/estado-cocheras']);
+
+    if(res?.statusText === "OK") this.router.navigate(['/estado-cocheras']);
+    
     else this.errorLogin = true;
   }
 }

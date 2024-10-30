@@ -6,8 +6,7 @@ export const soloAdminGuard: CanActivateFn = (route, state) => {
   const dataAuthService = inject(DataAuthService);
   const router = inject(Router)
 
-  console.log(dataAuthService.usuario)
   if (dataAuthService.usuario?.esAdmin) return true;
-  const url = router.parseUrl("/estado-cocheras");
+  const url = router.parseUrl('/estado-cocheras');
   return new RedirectCommand(url);
 };

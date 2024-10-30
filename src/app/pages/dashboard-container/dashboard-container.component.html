@@ -1,12 +1,13 @@
 <header>
-    <h1>PARKING APP</h1>
+    <h1>Parking App</h1>
     <nav>
-        <a [routerLink]="['/estado-cocheras']" routerLinkActive="link-activo">Estado cocheras</a>
-        <ng-container *ngIf="esAdmin">
-            <a [routerLink]="['/reportes']" routerLinkActive="link-activo">Reportes</a>
-            <a [routerLink]="['/precios']" routerLinkActive="link-activo">Precios</a>
-        </ng-container>
-        <a>Usuario</a>
+        <a [routerLink]="['/estado-cocheras']" routerLinkActive="link-activo" >Estado cocheras</a>
+        @if(esAdmin){
+            <a [routerLink]="['/reportes']" routerLinkActive="link-activo" >Reportes</a>
+            <a [routerLink]="['/precios']" routerLinkActive="link-activo" >Precios</a>
+        }
+                    <a [routerLink]="['/Usuario']" routerLinkActive="link-activo">Usuario</a>
+                <button class="boton-cerrar-sesion" (click)="cerrarSesion()">Cerrar sesión</button>
     </nav>
 </header>
-<router-outlet></router-outlet>
+<router-outlet />

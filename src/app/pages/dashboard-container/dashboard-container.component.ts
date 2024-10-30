@@ -1,15 +1,23 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule, RouterOutlet, Router } from '@angular/router';
-import { DataAuthService } from '../../services/data-auth.service'; // Asegúrate de que la ruta sea correcta
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { DataAuthService } from '../../services/data-auth.service';
 
 @Component({
   selector: 'app-dashboard-container',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterModule], // Incluyendo CommonModule
+  imports: [RouterOutlet,RouterModule],
   templateUrl: './dashboard-container.component.html',
-  styleUrls: ['./dashboard-container.component.scss'] // Corregido styleUrl a styleUrls
+  styleUrl: './dashboard-container.component.scss'
 })
 export class DashboardContainerComponent {
   esAdmin = true;
+  authService = inject(DataAuthService);
+  router = inject(Router);
+
+  cerrarSesion(){
+    this.authService.usuario = undefined;
+    this.authService.clearToken();
+    this.router.navigate(['/login']);
+
+  }
 }

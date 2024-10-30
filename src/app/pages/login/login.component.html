@@ -4,7 +4,7 @@
     </div>
     <div id="derecha">
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-            <input type="text" id="usuario" placeholder="Usuario" name="usuario" ngModel required>
+            <input type="text" id="usuario" placeholder="Usuario" name="username" ngModel required>
             <input type="password" id="password" placeholder="Contraseña" name="password" ngModel required>
             <button [disabled]="loginForm.invalid" class="boton-resaltado" type="submit">Iniciar sesión</button>
             @if(errorLogin) {

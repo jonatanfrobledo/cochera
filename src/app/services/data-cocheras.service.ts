@@ -53,24 +53,23 @@ export class DataCocherasService {
   }
 
   ultimoNumero = this.cocheras[this.cocheras.length-1]?.id || 0;
-  //ultimoNumero = this.cocheras.length === 0 ? 0 : this.cocheras[this.cocheras.length-1].numero;
   
-  async agregarCochera(){
-    const cochera = {"descripcion" : "Agregada por WebApi"};
+  async agregarCochera(nombreCochera:string){
+    const cochera = {"descripcion" : nombreCochera};
     const res = await fetch('http://localhost:4000/cocheras',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization:'Bearer '+this.authService.usuario?.token
+        authorization:'Bearer '+ localStorage.getItem("authToken")
       },
       body: JSON.stringify(cochera)
     })
-    const responseData = await res.json();  // Capturamos el cuerpo de la respuesta para ver más detalles
-  if (res.status !== 200 && res.status !== 201) {
-    console.log("Error en la creación de una nueva cochera", responseData);
+  if (res.status !== 200) {
+    console.log("Error en la creación de una nueva cochera",);
   } else {
-    console.log("Creación de cochera exitosa", responseData);
-  }
+    console.log("Creación de cochera exitosa",)
+    this.loadData();
+  };
 }
 
   async borrarFila(index:number){
