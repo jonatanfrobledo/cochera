@@ -3,15 +3,15 @@ import { Estacionamiento } from "./estacionamiento";
 export interface Cochera {
     id: number;
     descripcion: string;
-    deshabilitada: number; // 0 para libre, 1 para ocupada
-    eliminada: number; // 0 para no eliminada, 1 para eliminada
+    deshabilitada: number; 
+    eliminada: number; 
     fechaIngreso: Date;
     horaIngreso: Date;
     minutosOcupados: number;
-    segundosOcupados: number; // Añadir esta línea
-    horasOcupadas: number; // Añadir esta línea
+    segundosOcupados: number; 
+    horasOcupadas: number; 
     costo: number;
-    patente: string; // Campo para la patente
+    patente: string; 
     estacionamiento: Estacionamiento | undefined;
   }
   

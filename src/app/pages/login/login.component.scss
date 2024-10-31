@@ -9,7 +9,7 @@ h1 {
 main {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  height: 100vh; /* Usamos la unidad de viewport para un diseño adaptable */
+  height: 100vh; 
 }
 
 #izquierda {
@@ -29,9 +29,9 @@ main {
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+  background-color: rgba(255, 255, 255, 0.9); 
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 form {
@@ -63,7 +63,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(178, 11, 11); /* Color más oscuro */
+  background-color: rgb(178, 11, 11); 
 }
 
 
@@ -82,7 +82,7 @@ a:hover {
   text-decoration: underline;
 }
 button:hover {
-  background-color: #008b8b; /* O un color más oscuro de tu elección */
+  background-color: #008b8b; 
 }
 
 

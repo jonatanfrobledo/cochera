@@ -6,8 +6,8 @@
             <a [routerLink]="['/reportes']" routerLinkActive="link-activo" >Reportes</a>
             <a [routerLink]="['/precios']" routerLinkActive="link-activo" >Precios</a>
         }
-                    <a [routerLink]="['/Usuario']" routerLinkActive="link-activo">Usuario</a>
-                <button class="boton-cerrar-sesion" (click)="cerrarSesion()">Cerrar sesión</button>
+            <a [routerLink]="['']" routerLinkActive="link-activo">Usuario</a>
+            <button class="boton-cerrar-sesion" (click)="cerrarSesion()">Cerrar sesión</button>
     </nav>
 </header>
 <router-outlet />

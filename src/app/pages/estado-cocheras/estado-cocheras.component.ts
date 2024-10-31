@@ -30,15 +30,12 @@ export class EstadoCocherasComponent {
       confirmButtonText: "AGREGAR",
       denyButtonText: `CANCELAR`,
       input: "text",
-      inputLabel: "INGRESE LA PATENTE"
+      inputLabel: "Nombre de cochera"
     }).then(async (result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.dataCocherasService.agregarCochera(result.value)
-        // await this.borrarFila(cocheraId)
-        // Swal.fire("Saved!", "", "success");
+
       } else if (result.isDenied) {
-        // Swal.fire("Changes are not saved", "", "info");
       }
     });
   }
@@ -59,7 +56,6 @@ export class EstadoCocherasComponent {
         return;
       }
     }).then(async (result) => { 
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         await this.dataCocherasService.borrarFila(cocheraId)
         Swal.fire("Borrado", "", "success");
@@ -78,9 +74,7 @@ export class EstadoCocherasComponent {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await this.dataCocherasService.deshabilitarCochera(cocheraId)
-        // Swal.fire("Saved!", "", "success");
       } else if (result.isDenied) {
-        // Swal.fire("Changes are not saved", "", "info");
       }
     });
   }
@@ -94,9 +88,7 @@ export class EstadoCocherasComponent {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await this.dataCocherasService.habilitarCochera(cocheraId)
-        // Swal.fire("Saved!", "", "success");
       } else if (result.isDenied) {
-        // Swal.fire("Changes are not saved", "", "info");
       }
     });
   }

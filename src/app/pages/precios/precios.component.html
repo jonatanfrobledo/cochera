@@ -1,9 +1,26 @@
-<main class="flex-center">
-    <div class="message-container">
-        <p>Esta página aún se está construyendo.</p>
-        <div class="icon-container">
-            <div class="cone"></div>
-            <div class="hammer"></div>
-        </div>
-    </div>
-</main>
+<div class="precios-container">
+    <h2>Precios de Estacionamiento</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo de Vehículo</th>
+          <th>Media Hora</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (tarifa of dataTarifaService.tarifas; track $index){
+            <tr>
+                <td>{{ tarifa.descripcion }} </td>
+                <td>${{ tarifa.valor }}</td>
+                
+                <td>
+                    <button (click)="editarPrecio(tarifa)">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+      </tbody>
+    </table>
+  </div>

@@ -1,23 +1,22 @@
 <main class="flex-column-center">
     <table>
         <thead>
-        <td>Nº</td>
+        <td>Cochera</td>
         <td>Disponibilidad</td>
-        <td>Patente</td>
         <td>Acciones</td>
     </thead>
     <tbody>
         @for (cochera of dataCocherasService.cocheras; track $index) {
             <tr>
-                <td> {{ cochera.id }} </td>
+                <td> {{ cochera.descripcion }} </td>
                 <td>
                     @if (!cochera.estacionamiento?.horaEgreso && cochera.estacionamiento?.horaIngreso) {
                         <button (click)="cerrarEstacionamiento(cochera)">
                             {{ cochera.estacionamiento?.patente }}
                         </button>
-                    } @else if (cochera.estacionamiento?.horaEgreso) {
-                        <button (click)="abrirEstacionamiento(cochera.id)">
-                            Desocupado
+                    } @else if (cochera.deshabilitada) {
+                        <button >
+                            Bloqueado
                         </button>
                     } @else {
                         <button (click)="abrirEstacionamiento(cochera.id)">
@@ -25,7 +24,6 @@
                         </button>
                     }
                 </td>
-                <td>{{ cochera.descripcion }}</td>
                 <td class="acciones-container"> 
                     @if(!cochera.deshabilitada){
                         <button (click)="preguntarDeshabilitarCochera(cochera.id)">Deshabilitar cochera</button>
