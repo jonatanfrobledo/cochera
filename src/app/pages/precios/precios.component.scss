@@ -8,10 +8,12 @@ main .container {
     flex-direction: column;
     align-items: center;
     padding: 3rem;
+    background-image: url('./../../../../public/top-view-electric-cars-parking-lot.jpg'); 
     background-size: cover; 
-    background-position: center;
+    background-position: center; 
     background-repeat: no-repeat; 
     min-height: 100vh; 
+    overflow: hidden;
 }
 
 /* Estilo para la tabla */
