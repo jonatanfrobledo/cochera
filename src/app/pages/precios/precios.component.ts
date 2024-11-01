@@ -9,21 +9,28 @@ import { Tarifa } from '../../interfaces/tarifa';
   standalone: true,
   imports: [],
   templateUrl: './precios.component.html',
-  styleUrl: './precios.component.scss'
+  styleUrls: ['./precios.component.scss']
 })
 export class PreciosComponent {
-  dataTarifaService = inject(DataTarifasService)
+  dataTarifaService = inject(DataTarifasService);
 
   async editarPrecio(tarifa: Tarifa) {
-    const { value: valor } = await Swal.fire({
+    const precio = await Swal.fire({
       title: "Ingrese el nuevo precio",
       input: "text",
       inputLabel: "Ingrese el nuevo precio",
       inputPlaceholder: "Ingrese el nuevo precio"
     });
-    if (valor) {
-      Swal.fire(`Nuevo precio: ${valor}`);
+
+    // Asigna el nuevo precio y muestra el valor en SweetAlert si está disponible
+    if (precio.value) {
+      tarifa.valor = precio.value;
+      Swal.fire(`Nuevo precio: ${precio.value}`);
+      
+      // Llama a la función para actualizar la tarifa
+      this.dataTarifaService.actualizarTarifa(tarifa).then(() => {
+        this.dataTarifaService.getTarifas();
+      });
     }
-    this.dataTarifaService.actualizarTarifa(tarifa);
-  }
+  }
 }
